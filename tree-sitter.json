@@ -1,0 +1,41 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "ponos",
+      "camelcase": "Ponos",
+      "title": "Ponos",
+      "scope": "source.ponos",
+      "file-types": [
+        "ponos",
+        "pns",
+        "пнс"
+      ],
+      "injection-regex": "^ponos$",
+      "class-name": "TreeSitterPonos"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Ponos grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Gaidar",
+        "email": "garius642@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/Garius6/tree-sitter-ponos"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
