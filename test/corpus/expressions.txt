@@ -1,0 +1,34 @@
+=============
+Unary expression
+=============
+-1;
+!истина;
+---
+
+(source_file (expression_statement (unary_expression (number))) (expression_statement (unary_expression (bool)))) 
+
+
+=============
+Binary expression
+=============
+1 + 1;
+1 - 1;
+1 * 1;
+1 / 1;
+1 < 1;
+1 > 1;
+1 <= 1;
+1 >= 1;
+истина или ложь;
+---
+(source_file 
+(expression_statement (binary_expression (number) (number)))
+(expression_statement (binary_expression (number) (number)))
+(expression_statement (binary_expression (number) (number)))
+(expression_statement (binary_expression (number) (number)))
+(expression_statement (binary_expression (number) (number)))
+(expression_statement (binary_expression (number) (number)))
+(expression_statement (binary_expression (number) (number)))
+(expression_statement (binary_expression (number) (number)))
+(expression_statement (binary_expression (bool) (bool))))
+

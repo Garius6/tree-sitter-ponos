@@ -1,0 +1,32 @@
+=========
+Function declaration
+=========
+
+функ СПараметрамиСТелом(а, б)
+  1 + 1;
+конец
+
+функ БезПараметровСТелом()
+  1 + 1;
+конец
+
+функ БезПараметровБезТела()
+
+конец
+
+---
+(source_file 
+(function_declaration_statement (identifier) (params_list (identifier) (identifier)) (expression_statement (binary_expression (number) (number))))
+
+(function_declaration_statement (identifier) (params_list) (expression_statement (binary_expression (number) (number))))
+
+(function_declaration_statement (identifier) (params_list))
+)
+
+=========
+Function call
+=========
+вывести("Привет мир");
+
+---
+(source_file (expression_statement (call_expression (identifier) (arguments (string)))))

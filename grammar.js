@@ -7,6 +7,16 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+const PREC = {
+  call: 7,
+  unary: 6,
+  multiplicative: 5,
+  additive: 4,
+  comparative: 3,
+  and: 2,
+  or: 1
+}
+
 module.exports = grammar({
   name: "ponos",
 
@@ -16,17 +26,17 @@ module.exports = grammar({
   ],
 
   rules: {
-    source_file: $ => repeat($.statement),
-    
+    source_file: $ => repeat($._statement),
+
     comment: ($) =>
       token(
         choice(seq("//", /.*/)),
       ),
 
-    statement: $ => choice (
+    _statement: $ => choice(
       $.var_statement,
       $.return_statement,
-      $.function_declaration,
+      $.function_declaration_statement,
       $.assigment_statement,
       $.if_statement,
       $.while_statement,
@@ -37,79 +47,88 @@ module.exports = grammar({
       "пер",
       $.identifier,
       "=",
-      $.expression,
+      $._expression,
       ";"
     ),
 
     return_statement: $ => seq(
       "возврат",
-      optional($.expression),
+      optional($._expression),
       ";"
     ),
 
-    function_declaration: $ => seq(
+    function_declaration_statement: $ => seq(
       "функ",
       $.identifier,
-      "(",
-      optional($.params_list),
-      ")",
-      repeat($.statement),
+      $.params_list,
+      repeat($._statement),
       "конец"
     ),
 
     params_list: $ => seq(
-      $.identifier,
-      optional(repeat(seq(",", $.identifier)))
+      "(",
+      sepBy(",", $.identifier),
+      ")"
     ),
 
     assigment_statement: $ => seq(
       $.identifier,
       "=",
-      $.expression,
+      $._expression,
       ";"
     ),
 
     if_statement: $ => seq(
       "если",
-      $.expression,
-      repeat($.statement),
-      optional(seq("иначе", repeat($.statement))),
+      $._expression,
+      repeat($._statement),
+      optional(seq("иначе", repeat($._statement))),
       "конец"
     ),
-    
+
     while_statement: $ => seq(
       "пока",
-      $.expression,
-      repeat($.statement),
+      $._expression,
+      repeat($._statement),
       "конец"
     ),
 
     expression_statement: $ => seq(
-      $.expression,
+      $._expression,
       ";"
     ),
-    
-    expression: $ => choice(
+
+    _expression: $ => choice(
+      $.call_expression,
       $._literal,
-      $.identifier,
+      prec.left($.identifier),
       $.unary_expression,
       $.binary_expression
     ),
 
     unary_expression: $ => prec(
-      5,
+      PREC.unary,
       choice(
-        seq("-", $.expression),
-        seq("!", $.expression),
+        seq("-", $._expression),
+        seq("!", $._expression),
       ),
     ),
-    
 
     binary_expression: $ => choice(
-      prec.left(4, seq($.expression, choice('*', '/'), $.expression)),
-      prec.left(3, seq($.expression, choice('+', '-'), $.expression)),
-      prec.left(2, seq($.expression, choice('<', '<=', '>', '>='), $.expression)),
-      prec.left(1, seq($.expression, choice('и', 'или'), $.expression)),
+      prec.left(PREC.multiplicative, seq($._expression, choice('*', '/'), $._expression)),
+      prec.left(PREC.additive, seq($._expression, choice('+', '-'), $._expression)),
+      prec.left(PREC.comparative, seq($._expression, choice('<', '<=', '>', '>='), $._expression)),
+      prec.left(PREC.and, seq($._expression, 'и', $._expression)),
+      prec.left(PREC.or, seq($._expression, 'или', $._expression)),
+    ),
+
+    call_expression: $ => prec(PREC.call, seq($._expression, $.arguments)),
+
+    arguments: $ => seq(
+      '(',
+      sepBy(',', seq($._expression)),
+      optional(','),
+      ')',
     ),
 
     identifier: $ => /[\p{XID_Start}_][\p{XID_Continue}_]*/,
@@ -121,20 +140,45 @@ module.exports = grammar({
     ),
 
     number: $ => /[0-9]+(\.[0-9]+)?/,
-  
+
     bool: $ => choice(
       "истина",
       "ложь"
     ),
 
     string: $ => seq(
-       '"',
+      '"',
       repeat(choice(
         /[^"\\\n]/,        // любой символ кроме кавычки, бэкслэша и перевода строки
-       /\\./              // escape-последовательности
+        /\\./              // escape-последовательности
       )),
       '"'
     )
 
   }
 });
+
+/**
+ * Creates a rule to match one or more of the rules separated by the separator.
+ *
+ * @param {RuleOrLiteral} sep - The separator to use.
+ * @param {RuleOrLiteral} rule
+ *
+ * @returns {SeqRule}
+ */
+function sepBy1(sep, rule) {
+  return seq(rule, repeat(seq(sep, rule)));
+}
+
+
+/**
+ * Creates a rule to optionally match one or more of the rules separated by the separator.
+ *
+ * @param {RuleOrLiteral} sep - The separator to use.
+ * @param {RuleOrLiteral} rule
+ *
+ * @returns {ChoiceRule}
+ */
+function sepBy(sep, rule) {
+  return optional(sepBy1(sep, rule));
+}

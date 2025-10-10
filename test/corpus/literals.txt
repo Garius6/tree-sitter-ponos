@@ -1,0 +1,29 @@
+===========
+Integer literal
+===========
+1;
+100;
+2123;
+
+---
+
+(source_file (expression_statement (number)) (expression_statement (number)) (expression_statement (number)))
+
+===========
+String literal 
+===========
+"";
+"Абракадабра";
+"Привет мир!";
+
+--- 
+
+(source_file (expression_statement (string)) (expression_statement (string)) (expression_statement (string)))
+
+===========
+Bool literal
+===========
+истина;
+ложь;
+
+(source_file (expression_statement (bool))  (expression_statement (bool)))
