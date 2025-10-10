@@ -1,0 +1,56 @@
+===========
+Class declaration
+===========
+класс Книга
+  
+конец
+
+класс Книга
+  а
+конец
+
+класс Книга
+  а
+  б
+конец
+
+класс Книга
+
+  функ а()
+
+  конец
+
+конец
+
+класс Книга
+
+  а
+  функ а()
+
+  конец
+
+конец
+
+класс Учебник наследует Книга 
+  
+конец
+
+класс Учебник реализует Листаемое
+  
+конец
+---
+(source_file 
+(class_declaration_statement (identifier))
+
+(class_declaration_statement (identifier) (members_list (identifier)))
+
+(class_declaration_statement (identifier) (members_list (identifier) (identifier)))
+
+(class_declaration_statement (identifier) (members_list  (function_declaration_statement (identifier) (params_list))))
+
+(class_declaration_statement (identifier) (members_list  (identifier) (function_declaration_statement (identifier) (params_list))))
+
+(class_declaration_statement (identifier) (identifier))
+
+(class_declaration_statement (identifier) (identifier))
+)

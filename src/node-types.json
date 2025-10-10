@@ -181,6 +181,25 @@
     }
   },
   {
+    "type": "class_declaration_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "members_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "closure_expression",
     "named": true,
     "fields": {},
@@ -190,6 +209,10 @@
       "types": [
         {
           "type": "assigment_statement",
+          "named": true
+        },
+        {
+          "type": "class_declaration_statement",
           "named": true
         },
         {
@@ -279,6 +302,10 @@
           "named": true
         },
         {
+          "type": "class_declaration_statement",
+          "named": true
+        },
+        {
           "type": "expression_statement",
           "named": true
         },
@@ -338,6 +365,10 @@
           "named": true
         },
         {
+          "type": "class_declaration_statement",
+          "named": true
+        },
+        {
           "type": "closure_expression",
           "named": true
         },
@@ -379,6 +410,25 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "members_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "function_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -453,6 +503,10 @@
       "types": [
         {
           "type": "assigment_statement",
+          "named": true
+        },
+        {
+          "type": "class_declaration_statement",
           "named": true
         },
         {
@@ -595,6 +649,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "class_declaration_statement",
           "named": true
         },
         {
@@ -742,6 +800,10 @@
     "named": false
   },
   {
+    "type": "класс",
+    "named": false
+  },
+  {
     "type": "конец",
     "named": false
   },
@@ -750,11 +812,19 @@
     "named": false
   },
   {
+    "type": "наследует",
+    "named": false
+  },
+  {
     "type": "пер",
     "named": false
   },
   {
     "type": "пока",
+    "named": false
+  },
+  {
+    "type": "реализует",
     "named": false
   },
   {

@@ -41,7 +41,8 @@ module.exports = grammar({
       $.assigment_statement,
       $.if_statement,
       $.while_statement,
-      $.expression_statement
+      $.expression_statement,
+      $.class_declaration_statement
     ),
 
     var_statement: $ => seq(
@@ -92,6 +93,22 @@ module.exports = grammar({
       $._expression,
       repeat($._statement),
       "конец"
+    ),
+
+    class_declaration_statement: $ => seq(
+      "класс",
+      $.identifier,
+      optional(seq("наследует", $.identifier)),
+      optional(seq("реализует", $.identifier)),
+      optional($.members_list),
+      "конец"
+    ),
+
+    members_list: $ => repeat1(
+      choice(
+        $.function_declaration_statement,
+        $.identifier
+      )
     ),
 
     expression_statement: $ => seq(
