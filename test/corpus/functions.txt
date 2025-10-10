@@ -30,3 +30,14 @@ Function call
 
 ---
 (source_file (expression_statement (call_expression (identifier) (arguments (string)))))
+
+=========
+Closure
+=========
+пер а = функ (а, б)
+  1 + 1;
+конец;
+
+---
+
+(source_file (var_statement (identifier) (closure_expression (params_list (identifier) (identifier)) (expression_statement (binary_expression (number) (number)) ))))

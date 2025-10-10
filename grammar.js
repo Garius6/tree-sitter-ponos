@@ -14,7 +14,8 @@ const PREC = {
   additive: 4,
   comparative: 3,
   and: 2,
-  or: 1
+  or: 1,
+  closure: 0
 }
 
 module.exports = grammar({
@@ -103,7 +104,8 @@ module.exports = grammar({
       $._literal,
       prec.left($.identifier),
       $.unary_expression,
-      $.binary_expression
+      $.binary_expression,
+      $.closure_expression,
     ),
 
     unary_expression: $ => prec(
@@ -130,6 +132,13 @@ module.exports = grammar({
       optional(','),
       ')',
     ),
+
+    closure_expression: $ => prec(PREC.closure, seq(
+      "функ",
+      $.params_list,
+      repeat($._statement),
+      "конец"
+    )),
 
     identifier: $ => /[\p{XID_Start}_][\p{XID_Continue}_]*/,
 

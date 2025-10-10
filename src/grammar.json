@@ -319,6 +319,10 @@
         {
           "type": "SYMBOL",
           "name": "binary_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "closure_expression"
         }
       ]
     },
@@ -586,6 +590,34 @@
           "value": ")"
         }
       ]
+    },
+    "closure_expression": {
+      "type": "PREC",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "функ"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "params_list"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_statement"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "конец"
+          }
+        ]
+      }
     },
     "identifier": {
       "type": "PATTERN",
