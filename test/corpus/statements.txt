@@ -54,3 +54,14 @@ Class declaration
 
 (class_declaration_statement (identifier) (identifier))
 )
+
+===========
+Fields
+===========
+Книга.наименование;
+Книга.прочитать();
+---
+(source_file 
+(expression_statement (field_expression (identifier) (identifier)))
+(expression_statement (call_expression (field_expression (identifier) (identifier)) (arguments)))
+)

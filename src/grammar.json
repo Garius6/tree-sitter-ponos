@@ -414,6 +414,10 @@
         {
           "type": "SYMBOL",
           "name": "closure_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "field_expression"
         }
       ]
     },
@@ -599,7 +603,7 @@
     },
     "call_expression": {
       "type": "PREC",
-      "value": 7,
+      "value": 8,
       "content": {
         "type": "SEQ",
         "members": [
@@ -610,6 +614,27 @@
           {
             "type": "SYMBOL",
             "name": "arguments"
+          }
+        ]
+      }
+    },
+    "field_expression": {
+      "type": "PREC",
+      "value": 7,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "STRING",
+            "value": "."
+          },
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
           }
         ]
       }
