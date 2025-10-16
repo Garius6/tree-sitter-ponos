@@ -35,18 +35,6 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "module_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "import_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "export_statement"
-        },
-        {
-          "type": "SYMBOL",
           "name": "var_statement"
         },
         {
@@ -76,258 +64,6 @@
         {
           "type": "SYMBOL",
           "name": "class_declaration_statement"
-        }
-      ]
-    },
-    "module_declaration": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "модуль"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": ";"
-        }
-      ]
-    },
-    "import_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "использовать"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "string"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "import_modifiers"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": ";"
-        }
-      ]
-    },
-    "import_modifiers": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "показать"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier_list"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "скрыть"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier_list"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "как"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "как"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            {
-              "type": "STRING",
-              "value": "показать"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier_list"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "как"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            {
-              "type": "STRING",
-              "value": "скрыть"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier_list"
-            }
-          ]
-        }
-      ]
-    },
-    "identifier_list": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": ","
-              },
-              {
-                "type": "SYMBOL",
-                "name": "identifier"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "export_statement": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "экспорт"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "declaration"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "экспорт"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "string"
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "export_modifiers"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            },
-            {
-              "type": "STRING",
-              "value": ";"
-            }
-          ]
-        }
-      ]
-    },
-    "export_modifiers": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "показать"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier_list"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "скрыть"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier_list"
-            }
-          ]
-        }
-      ]
-    },
-    "declaration": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "function_declaration_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "class_declaration_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "var_statement"
         }
       ]
     },
@@ -459,17 +195,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "field_expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
           "type": "STRING",
@@ -635,6 +362,10 @@
         "members": [
           {
             "type": "SYMBOL",
+            "name": "constructor_declaration"
+          },
+          {
+            "type": "SYMBOL",
             "name": "function_declaration_statement"
           },
           {
@@ -643,6 +374,30 @@
           }
         ]
       }
+    },
+    "constructor_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "конструктор"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "params_list"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "конец"
+        }
+      ]
     },
     "expression_statement": {
       "type": "SEQ",
