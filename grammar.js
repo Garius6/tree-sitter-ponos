@@ -75,7 +75,7 @@ module.exports = grammar({
     ),
 
     assigment_statement: $ => seq(
-      $.identifier,
+      choice($.identifier, $.field_expression),
       "=",
       $._expression,
       ";"
