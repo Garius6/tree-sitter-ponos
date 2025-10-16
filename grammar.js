@@ -36,6 +36,9 @@ module.exports = grammar({
       ),
 
     _statement: $ => choice(
+      $.module_declaration,
+      $.import_statement,
+      $.export_statement,
       $.var_statement,
       $.return_statement,
       $.function_declaration_statement,
@@ -44,6 +47,50 @@ module.exports = grammar({
       $.while_statement,
       $.expression_statement,
       $.class_declaration_statement
+    ),
+
+    module_declaration: $ => seq(
+      "модуль",
+      $.identifier,
+      ";"
+    ),
+
+    import_statement: $ => seq(
+      "использовать",
+      $.string,
+      optional($.import_modifiers),
+      ";"
+    ),
+
+    import_modifiers: $ => choice(
+      seq("показать", $.identifier_list),
+      seq("скрыть", $.identifier_list),
+      seq("как", $.identifier),
+      seq("как", $.identifier, "показать", $.identifier_list),
+      seq("как", $.identifier, "скрыть", $.identifier_list),
+    ),
+
+    identifier_list: $ => sepBy1(",", $.identifier),
+
+    export_statement: $ => choice(
+      seq("экспорт", $.declaration),
+      seq(
+        "экспорт",
+        $.string,
+        optional($.export_modifiers),
+        ";"
+      )
+    ),
+
+    export_modifiers: $ => choice(
+      seq("показать", $.identifier_list),
+      seq("скрыть", $.identifier_list),
+    ),
+
+    declaration: $ => choice(
+      $.function_declaration_statement,
+      $.class_declaration_statement,
+      $.var_statement,
     ),
 
     var_statement: $ => seq(
@@ -75,7 +122,7 @@ module.exports = grammar({
     ),
 
     assigment_statement: $ => seq(
-      $.identifier,
+      choice($.identifier, $.field_expression),
       "=",
       $._expression,
       ";"
