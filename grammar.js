@@ -100,7 +100,7 @@ module.exports = grammar({
       "класс",
       $.identifier,
       optional(seq("наследует", $.identifier)),
-      optional(seq("реализует", $.identifier)),
+      optional(seq("реализует", sepBy1(",", $.identifier))),
       optional($.members_list),
       "конец"
     ),
@@ -132,7 +132,9 @@ module.exports = grammar({
       $.unary_expression,
       $.binary_expression,
       $.closure_expression,
-      $.field_expression
+      $.field_expression,
+      $.this_expression,
+      $.super_expression
     ),
 
     unary_expression: $ => prec(
@@ -158,6 +160,14 @@ module.exports = grammar({
       ".",
       $.identifier
     )),
+
+    this_expression: $ => "это",
+
+    super_expression: $ => seq(
+      "родитель",
+      ".",
+      $.identifier
+    ),
 
     arguments: $ => seq(
       '(',
