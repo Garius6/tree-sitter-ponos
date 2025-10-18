@@ -50,6 +50,7 @@ module.exports = grammar({
     var_statement: $ => seq(
       "пер",
       $.identifier,
+      optional($.type),
       "=",
       $._expression,
       ";"
@@ -71,7 +72,7 @@ module.exports = grammar({
 
     params_list: $ => seq(
       "(",
-      sepBy(",", $.identifier),
+      sepBy(",", seq($.identifier, optional($.type))),
       ")"
     ),
 
@@ -203,6 +204,11 @@ module.exports = grammar({
     )),
 
     identifier: $ => /[\p{XID_Start}_][\p{XID_Continue}_]*/,
+
+    type: $ => seq(
+      ":",
+      $.identifier
+    ),
 
     _literal: $ => choice(
       $.number,
