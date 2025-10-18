@@ -43,7 +43,8 @@ module.exports = grammar({
       $.if_statement,
       $.while_statement,
       $.expression_statement,
-      $.class_declaration_statement
+      $.class_declaration_statement,
+      $.interface_declaration_statement
     ),
 
     var_statement: $ => seq(
@@ -118,6 +119,24 @@ module.exports = grammar({
       $.params_list,
       repeat($._statement),
       "конец"
+    ),
+
+    interface_declaration_statement: $ => seq(
+      "интерфейс",
+      $.identifier,
+      optional($.interface_members_list),
+      "конец"
+    ),
+
+    interface_members_list: $ => repeat1(
+      $.method_signature
+    ),
+
+    method_signature: $ => seq(
+      "функ",
+      $.identifier,
+      $.params_list,
+      ";"
     ),
 
     expression_statement: $ => seq(
