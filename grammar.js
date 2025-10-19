@@ -46,11 +46,11 @@ module.exports = grammar({
       $.class_declaration_statement,
       $.interface_declaration_statement,
       $.module_declaration,
-      $.import_statement,
-      $.export_statement
+      $.import_statement
     ),
 
     var_statement: $ => seq(
+      optional("экспорт"),
       "пер",
       $.identifier,
       optional($.type),
@@ -66,6 +66,7 @@ module.exports = grammar({
     ),
 
     function_declaration_statement: $ => seq(
+      optional("экспорт"),
       "функ",
       $.identifier,
       $.params_list,
@@ -102,6 +103,7 @@ module.exports = grammar({
     ),
 
     class_declaration_statement: $ => seq(
+      optional("экспорт"),
       "класс",
       $.identifier,
       optional(seq("наследует", $.identifier)),
@@ -126,6 +128,7 @@ module.exports = grammar({
     ),
 
     interface_declaration_statement: $ => seq(
+      optional("экспорт"),
       "интерфейс",
       $.identifier,
       optional($.interface_members_list),
@@ -155,17 +158,6 @@ module.exports = grammar({
       "использовать",
       $.string,
       ";"
-    ),
-
-    // Экспорт определения
-    export_statement: $ => seq(
-      "экспорт",
-      choice(
-        $.function_declaration_statement,
-        $.class_declaration_statement,
-        $.interface_declaration_statement,
-        $.var_statement
-      )
     ),
 
     expression_statement: $ => seq(

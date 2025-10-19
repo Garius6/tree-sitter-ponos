@@ -76,16 +76,24 @@
         {
           "type": "SYMBOL",
           "name": "import_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "export_statement"
         }
       ]
     },
     "var_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "экспорт"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "STRING",
           "value": "пер"
@@ -148,6 +156,18 @@
     "function_declaration_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "экспорт"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "STRING",
           "value": "функ"
@@ -359,6 +379,18 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "экспорт"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "класс"
         },
@@ -495,6 +527,18 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "экспорт"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "интерфейс"
         },
@@ -579,36 +623,6 @@
         {
           "type": "STRING",
           "value": ";"
-        }
-      ]
-    },
-    "export_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "экспорт"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "function_declaration_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "class_declaration_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "interface_declaration_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "var_statement"
-            }
-          ]
         }
       ]
     },
