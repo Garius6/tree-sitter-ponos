@@ -153,12 +153,25 @@ module.exports = grammar({
       ";"
     ),
 
-    // Импорт (базовая версия для Этапа 1)
+    // Импорт с модификаторами (показать, скрыть, как)
     import_statement: $ => seq(
       "использовать",
       $.string,
+      optional($.import_modifiers),
       ";"
     ),
+
+    // Модификаторы импорта
+    import_modifiers: $ => choice(
+      seq("показать", $.identifier_list),
+      seq("скрыть", $.identifier_list),
+      seq("как", $.identifier),
+      seq("как", $.identifier, "показать", $.identifier_list),
+      seq("как", $.identifier, "скрыть", $.identifier_list),
+    ),
+
+    // Список идентификаторов через запятую
+    identifier_list: $ => sepBy1(",", $.identifier),
 
     expression_statement: $ => seq(
       $._expression,

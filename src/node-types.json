@@ -539,6 +539,21 @@
     }
   },
   {
+    "type": "identifier_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "if_statement",
     "named": true,
     "fields": {},
@@ -638,13 +653,36 @@
     }
   },
   {
+    "type": "import_modifiers",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "import_statement",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "import_modifiers",
+          "named": true
+        },
         {
           "type": "string",
           "named": true
@@ -1239,6 +1277,10 @@
     "named": false
   },
   {
+    "type": "как",
+    "named": false
+  },
+  {
     "type": "класс",
     "named": false
   },
@@ -1271,11 +1313,19 @@
     "named": false
   },
   {
+    "type": "показать",
+    "named": false
+  },
+  {
     "type": "реализует",
     "named": false
   },
   {
     "type": "родитель",
+    "named": false
+  },
+  {
+    "type": "скрыть",
     "named": false
   },
   {
