@@ -1,5 +1,225 @@
 [
   {
+    "type": "annotation",
+    "named": true,
+    "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "annotation_arguments",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "annotation_argument",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "bool",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "closure_expression",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "super_expression",
+            "named": true
+          },
+          {
+            "type": "this_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "bool",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "closure_expression",
+          "named": true
+        },
+        {
+          "type": "field_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "super_expression",
+          "named": true
+        },
+        {
+          "type": "this_expression",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "annotation_arguments",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "annotation_argument",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "annotation_declaration_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "annotation_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "assigment_statement",
+          "named": true
+        },
+        {
+          "type": "class_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "expression_statement",
+          "named": true
+        },
+        {
+          "type": "function_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "interface_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "module_declaration",
+          "named": true
+        },
+        {
+          "type": "return_statement",
+          "named": true
+        },
+        {
+          "type": "var_statement",
+          "named": true
+        },
+        {
+          "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "arguments",
     "named": true,
     "fields": {},
@@ -237,6 +457,10 @@
       "required": true,
       "types": [
         {
+          "type": "annotation",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -255,6 +479,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "annotation_declaration_statement",
+          "named": true
+        },
         {
           "type": "assigment_statement",
           "named": true
@@ -314,6 +542,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "annotation_declaration_statement",
+          "named": true
+        },
         {
           "type": "assigment_statement",
           "named": true
@@ -484,6 +716,14 @@
       "required": true,
       "types": [
         {
+          "type": "annotation",
+          "named": true
+        },
+        {
+          "type": "annotation_declaration_statement",
+          "named": true
+        },
+        {
           "type": "assigment_statement",
           "named": true
         },
@@ -561,6 +801,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "annotation_declaration_statement",
+          "named": true
+        },
         {
           "type": "assigment_statement",
           "named": true
@@ -865,6 +1109,10 @@
       "required": false,
       "types": [
         {
+          "type": "annotation_declaration_statement",
+          "named": true
+        },
+        {
           "type": "assigment_statement",
           "named": true
         },
@@ -1069,6 +1317,10 @@
       "required": true,
       "types": [
         {
+          "type": "annotation_declaration_statement",
+          "named": true
+        },
+        {
           "type": "assigment_statement",
           "named": true
         },
@@ -1168,6 +1420,10 @@
     "named": false
   },
   {
+    "type": "&",
+    "named": false
+  },
+  {
     "type": "(",
     "named": false
   },
@@ -1243,6 +1499,10 @@
   {
     "type": "this_expression",
     "named": true
+  },
+  {
+    "type": "аннотация",
+    "named": false
   },
   {
     "type": "возврат",

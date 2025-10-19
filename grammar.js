@@ -45,6 +45,7 @@ module.exports = grammar({
       $.expression_statement,
       $.class_declaration_statement,
       $.interface_declaration_statement,
+      $.annotation_declaration_statement,
       $.module_declaration,
       $.import_statement
     ),
@@ -66,6 +67,7 @@ module.exports = grammar({
     ),
 
     function_declaration_statement: $ => seq(
+      repeat($.annotation),
       optional("экспорт"),
       "функ",
       $.identifier,
@@ -103,6 +105,7 @@ module.exports = grammar({
     ),
 
     class_declaration_statement: $ => seq(
+      repeat($.annotation),
       optional("экспорт"),
       "класс",
       $.identifier,
@@ -144,6 +147,41 @@ module.exports = grammar({
       $.identifier,
       $.params_list,
       ";"
+    ),
+
+    // Аннотация (применение)
+    annotation: $ => seq(
+      "&",
+      field('name', $.identifier),
+      optional(field('arguments', $.annotation_arguments))
+    ),
+
+    // Аргументы аннотации
+    annotation_arguments: $ => seq(
+      "(",
+      sepBy(",", $.annotation_argument),
+      ")"
+    ),
+
+    // Аргумент аннотации (позиционный или именованный)
+    annotation_argument: $ => choice(
+      // Позиционный аргумент
+      $._expression,
+      // Именованный аргумент
+      seq(
+        field('name', $.identifier),
+        "=",
+        field('value', $._expression)
+      )
+    ),
+
+    // Объявление аннотации
+    annotation_declaration_statement: $ => seq(
+      optional("экспорт"),
+      "аннотация",
+      $.identifier,
+      repeat($._statement),
+      "конец"
     ),
 
     // Объявление модуля (опционально)
