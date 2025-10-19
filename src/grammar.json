@@ -68,6 +68,18 @@
         {
           "type": "SYMBOL",
           "name": "interface_declaration_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "module_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "import_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "export_statement"
         }
       ]
     },
@@ -533,6 +545,70 @@
         {
           "type": "STRING",
           "value": ";"
+        }
+      ]
+    },
+    "module_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "модуль"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "import_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "использовать"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "export_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "экспорт"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "function_declaration_statement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "class_declaration_statement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "interface_declaration_statement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "var_statement"
+            }
+          ]
         }
       ]
     },

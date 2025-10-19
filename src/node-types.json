@@ -264,6 +264,10 @@
           "named": true
         },
         {
+          "type": "export_statement",
+          "named": true
+        },
+        {
           "type": "expression_statement",
           "named": true
         },
@@ -276,7 +280,15 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "interface_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "module_declaration",
           "named": true
         },
         {
@@ -315,6 +327,10 @@
           "named": true
         },
         {
+          "type": "export_statement",
+          "named": true
+        },
+        {
           "type": "expression_statement",
           "named": true
         },
@@ -327,7 +343,15 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "interface_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "module_declaration",
           "named": true
         },
         {
@@ -344,6 +368,33 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "export_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "class_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "function_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "interface_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "var_statement",
           "named": true
         }
       ]
@@ -476,6 +527,10 @@
           "named": true
         },
         {
+          "type": "export_statement",
+          "named": true
+        },
+        {
           "type": "expression_statement",
           "named": true
         },
@@ -492,7 +547,15 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "interface_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "module_declaration",
           "named": true
         },
         {
@@ -547,6 +610,10 @@
           "named": true
         },
         {
+          "type": "export_statement",
+          "named": true
+        },
+        {
           "type": "expression_statement",
           "named": true
         },
@@ -567,7 +634,15 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "interface_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "module_declaration",
           "named": true
         },
         {
@@ -600,6 +675,21 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "import_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -676,6 +766,21 @@
         },
         {
           "type": "params_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "module_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -773,6 +878,10 @@
           "named": true
         },
         {
+          "type": "export_statement",
+          "named": true
+        },
+        {
           "type": "expression_statement",
           "named": true
         },
@@ -785,7 +894,15 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "interface_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "module_declaration",
           "named": true
         },
         {
@@ -985,6 +1102,10 @@
           "named": true
         },
         {
+          "type": "export_statement",
+          "named": true
+        },
+        {
           "type": "expression_statement",
           "named": true
         },
@@ -1005,7 +1126,15 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "interface_declaration_statement",
+          "named": true
+        },
+        {
+          "type": "module_declaration",
           "named": true
         },
         {
@@ -1153,6 +1282,10 @@
     "named": false
   },
   {
+    "type": "использовать",
+    "named": false
+  },
+  {
     "type": "истина",
     "named": false
   },
@@ -1170,6 +1303,10 @@
   },
   {
     "type": "ложь",
+    "named": false
+  },
+  {
+    "type": "модуль",
     "named": false
   },
   {
@@ -1194,6 +1331,10 @@
   },
   {
     "type": "функ",
+    "named": false
+  },
+  {
+    "type": "экспорт",
     "named": false
   }
 ]

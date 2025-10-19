@@ -44,7 +44,10 @@ module.exports = grammar({
       $.while_statement,
       $.expression_statement,
       $.class_declaration_statement,
-      $.interface_declaration_statement
+      $.interface_declaration_statement,
+      $.module_declaration,
+      $.import_statement,
+      $.export_statement
     ),
 
     var_statement: $ => seq(
@@ -138,6 +141,31 @@ module.exports = grammar({
       $.identifier,
       $.params_list,
       ";"
+    ),
+
+    // Объявление модуля (опционально)
+    module_declaration: $ => seq(
+      "модуль",
+      $.identifier,
+      ";"
+    ),
+
+    // Импорт (базовая версия для Этапа 1)
+    import_statement: $ => seq(
+      "использовать",
+      $.string,
+      ";"
+    ),
+
+    // Экспорт определения
+    export_statement: $ => seq(
+      "экспорт",
+      choice(
+        $.function_declaration_statement,
+        $.class_declaration_statement,
+        $.interface_declaration_statement,
+        $.var_statement
+      )
     ),
 
     expression_statement: $ => seq(
