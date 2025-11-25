@@ -119,7 +119,7 @@ module.exports = grammar({
       choice(
         $.constructor_declaration,
         $.function_declaration_statement,
-        $.identifier
+        seq($.identifier, optional($.type))
       )
     ),
 
