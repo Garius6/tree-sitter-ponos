@@ -1,34 +1,160 @@
-=============
-Unary expression
-=============
--1;
-!истина;
+===========
+Binary and unary
+===========
+-5 + 3 * 2 == 1;
+!истина или ложь;
+1 % 2;
 ---
 
-(source_file (expression_statement (unary_expression (number))) (expression_statement (unary_expression (bool)))) 
+(source_file
+  (expression_statement
+    (binary_expression
+      (binary_expression
+        (unary_expression
+          (primary_expression
+            (number)))
+        (binary_expression
+          (primary_expression
+            (number))
+          (primary_expression
+            (number))))
+      (primary_expression
+        (number))))
+  (expression_statement
+    (binary_expression
+      (unary_expression
+        (primary_expression
+          (bool)))
+      (primary_expression
+        (bool))))
+  (expression_statement
+    (binary_expression
+      (primary_expression
+        (number))
+      (primary_expression
+        (number)))))
 
-
-=============
-Binary expression
-=============
-1 + 1;
-1 - 1;
-1 * 1;
-1 / 1;
-1 < 1;
-1 > 1;
-1 <= 1;
-1 >= 1;
-истина или ложь;
+===========
+Calls, fields, indexes, slices
+===========
+вызвать(1, 2, fn(3)).поле[значение][1:10];
+a[1:];
+a[:b];
+a[:];
+a[индекс];
 ---
-(source_file 
-(expression_statement (binary_expression (number) (number)))
-(expression_statement (binary_expression (number) (number)))
-(expression_statement (binary_expression (number) (number)))
-(expression_statement (binary_expression (number) (number)))
-(expression_statement (binary_expression (number) (number)))
-(expression_statement (binary_expression (number) (number)))
-(expression_statement (binary_expression (number) (number)))
-(expression_statement (binary_expression (number) (number)))
-(expression_statement (binary_expression (bool) (bool))))
 
+(source_file
+  (expression_statement
+    (index_expression
+      (index_expression
+        (field_expression
+          (call_expression
+            (primary_expression
+              (identifier))
+            (arguments
+              (primary_expression
+                (number))
+              (primary_expression
+                (number))
+              (call_expression
+                (primary_expression
+                  (identifier))
+                (arguments
+                  (primary_expression
+                    (number))))))
+          (identifier))
+        (primary_expression
+          (identifier)))
+      (slice
+        (primary_expression
+          (number))
+        (primary_expression
+          (number)))))
+  (expression_statement
+    (index_expression
+      (primary_expression
+        (identifier))
+      (slice
+        (primary_expression
+          (number)))))
+  (expression_statement
+    (index_expression
+      (primary_expression
+        (identifier))
+      (slice
+        (primary_expression
+          (identifier)))))
+  (expression_statement
+    (index_expression
+      (primary_expression
+        (identifier))
+      (slice)))
+  (expression_statement
+    (index_expression
+      (primary_expression
+        (identifier))
+      (primary_expression
+        (identifier)))))
+
+===========
+Arrays and dictionaries
+===========
+[1, 2, x];
+{};
+{ ключ: значение, другой: 2 };
+---
+
+(source_file
+  (expression_statement
+    (primary_expression
+      (array_literal
+        (primary_expression
+          (number))
+        (primary_expression
+          (number))
+        (primary_expression
+          (identifier)))))
+  (expression_statement
+    (primary_expression
+      (dict_literal)))
+  (expression_statement
+    (primary_expression
+      (dict_literal
+        (dict_pair
+          (primary_expression
+            (identifier))
+          (primary_expression
+            (identifier)))
+        (dict_pair
+          (primary_expression
+            (identifier))
+          (primary_expression
+            (number)))))))
+
+===========
+Parentheses and precedence
+===========
+(а + б) * (в - г) / 2;
+---
+
+(source_file
+  (expression_statement
+    (binary_expression
+      (binary_expression
+        (primary_expression
+          (parenthesized_expression
+            (binary_expression
+              (primary_expression
+                (identifier))
+              (primary_expression
+                (identifier)))))
+        (primary_expression
+          (parenthesized_expression
+            (binary_expression
+              (primary_expression
+                (identifier))
+              (primary_expression
+                (identifier))))))
+      (primary_expression
+        (number)))))

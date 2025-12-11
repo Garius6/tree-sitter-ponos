@@ -1,309 +1,259 @@
 /**
- * @file Ponos grammar for tree-sitter
- * @author Gaidar <garius642@gmail.com>
- * @license MIT
+ * Ponos grammar for tree-sitter
  */
 
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
 const PREC = {
-  call: 8,
-  field: 7,
-  unary: 6,
-  multiplicative: 5,
-  additive: 4,
-  comparative: 3,
-  and: 2,
-  or: 1,
-  closure: 0
-}
+  call: 9,
+  field: 9,
+  index: 9,
+  unary: 8,
+  multiplicative: 7,
+  additive: 6,
+  comparison: 5,
+  equality: 4,
+  and: 3,
+  or: 2,
+  closure: 1,
+};
 
 module.exports = grammar({
   name: "ponos",
 
   extras: ($) => [
-    /\s/, // whitespace
+    /\s/,
     $.comment,
   ],
 
+  conflicts: ($) => [
+    [$.parenthesized_expression, $.arguments],
+    [$.try_statement, $.primary_expression],
+  ],
+
   rules: {
-    source_file: $ => repeat($._statement),
+    source_file: ($) => repeat($._statement),
 
     comment: ($) =>
       token(
-        choice(seq("//", /.*/)),
+        choice(/\/\/[^\n]*/, /\/\*[\s\S]*?\*\//),
       ),
 
-    _statement: $ => choice(
-      $.var_statement,
-      $.return_statement,
-      $.function_declaration_statement,
-      $.assigment_statement,
-      $.if_statement,
-      $.while_statement,
-      $.expression_statement,
-      $.class_declaration_statement,
-      $.interface_declaration_statement,
-      $.annotation_declaration_statement,
-      $.module_declaration,
-      $.import_statement
-    ),
-
-    var_statement: $ => seq(
-      optional("экспорт"),
-      "пер",
-      $.identifier,
-      optional($.type),
-      "=",
-      $._expression,
-      ";"
-    ),
-
-    return_statement: $ => seq(
-      "возврат",
-      optional($._expression),
-      ";"
-    ),
-
-    function_declaration_statement: $ => seq(
-      repeat($.annotation),
-      optional("экспорт"),
-      "функ",
-      $.identifier,
-      $.params_list,
-      repeat($._statement),
-      "конец"
-    ),
-
-    params_list: $ => seq(
-      "(",
-      sepBy(",", seq($.identifier, optional($.type))),
-      ")"
-    ),
-
-    assigment_statement: $ => seq(
-      choice($.identifier, $.field_expression),
-      "=",
-      $._expression,
-      ";"
-    ),
-
-    if_statement: $ => seq(
-      "если",
-      $._expression,
-      repeat($._statement),
-      optional(seq("иначе", repeat($._statement))),
-      "конец"
-    ),
-
-    while_statement: $ => seq(
-      "пока",
-      $._expression,
-      repeat($._statement),
-      "конец"
-    ),
-
-    class_declaration_statement: $ => seq(
-      repeat($.annotation),
-      optional("экспорт"),
-      "класс",
-      $.identifier,
-      optional(seq("наследует", $.identifier)),
-      optional(seq("реализует", sepBy1(",", $.identifier))),
-      optional($.members_list),
-      "конец"
-    ),
-
-    members_list: $ => repeat1(
+    _statement: ($) =>
       choice(
-        $.constructor_declaration,
-        $.function_declaration_statement,
-        seq($.identifier, optional($.type))
-      )
-    ),
+        $.import_statement,
+        $.class_declaration,
+        $.interface_declaration,
+        $.annotation_declaration,
+        $.var_statement,
+        $.function_declaration,
+        $.try_statement,
+        $.throw_statement,
+        $.if_statement,
+        $.while_statement,
+        $.return_statement,
+        $.assignment_statement,
+        $.expression_statement,
+      ),
 
-    constructor_declaration: $ => seq(
-      "конструктор",
-      $.params_list,
-      repeat($._statement),
-      "конец"
-    ),
-
-    interface_declaration_statement: $ => seq(
-      optional("экспорт"),
-      "интерфейс",
-      $.identifier,
-      optional($.interface_members_list),
-      "конец"
-    ),
-
-    interface_members_list: $ => repeat1(
-      $.method_signature
-    ),
-
-    method_signature: $ => seq(
-      "функ",
-      $.identifier,
-      $.params_list,
-      ";"
-    ),
-
-    // Аннотация (применение)
-    annotation: $ => seq(
-      "&",
-      field('name', $.identifier),
-      optional(field('arguments', $.annotation_arguments))
-    ),
-
-    // Аргументы аннотации
-    annotation_arguments: $ => seq(
-      "(",
-      sepBy(",", $.annotation_argument),
-      ")"
-    ),
-
-    // Аргумент аннотации (позиционный или именованный)
-    annotation_argument: $ => choice(
-      // Позиционный аргумент
-      $._expression,
-      // Именованный аргумент
+    import_statement: ($) =>
       seq(
-        field('name', $.identifier),
-        "=",
-        field('value', $._expression)
-      )
-    ),
-
-    // Объявление аннотации
-    annotation_declaration_statement: $ => seq(
-      optional("экспорт"),
-      "аннотация",
-      $.identifier,
-      repeat($._statement),
-      "конец"
-    ),
-
-    // Объявление модуля (опционально)
-    module_declaration: $ => seq(
-      "модуль",
-      $.identifier,
-      ";"
-    ),
-
-    // Импорт с модификаторами (показать, скрыть, как)
-    import_statement: $ => seq(
-      "использовать",
-      $.string,
-      optional($.import_modifiers),
-      ";"
-    ),
-
-    // Модификаторы импорта
-    import_modifiers: $ => choice(
-      seq("показать", $.identifier_list),
-      seq("скрыть", $.identifier_list),
-      seq("как", $.identifier),
-      seq("как", $.identifier, "показать", $.identifier_list),
-      seq("как", $.identifier, "скрыть", $.identifier_list),
-    ),
-
-    // Список идентификаторов через запятую
-    identifier_list: $ => sepBy1(",", $.identifier),
-
-    expression_statement: $ => seq(
-      $._expression,
-      ";"
-    ),
-
-    _expression: $ => choice(
-      $.call_expression,
-      $._literal,
-      prec.left($.identifier),
-      $.unary_expression,
-      $.binary_expression,
-      $.closure_expression,
-      $.field_expression,
-      $.this_expression,
-      $.super_expression
-    ),
-
-    unary_expression: $ => prec(
-      PREC.unary,
-      choice(
-        seq("-", $._expression),
-        seq("!", $._expression),
+        "использовать",
+        $.string,
+        optional(seq("как", $.identifier)),
+        ";",
       ),
-    ),
 
-    binary_expression: $ => choice(
-      prec.left(PREC.multiplicative, seq($._expression, choice('*', '/'), $._expression)),
-      prec.left(PREC.additive, seq($._expression, choice('+', '-'), $._expression)),
-      prec.left(PREC.comparative, seq($._expression, choice('<', '<=', '>', '>='), $._expression)),
-      prec.left(PREC.and, seq($._expression, 'и', $._expression)),
-      prec.left(PREC.or, seq($._expression, 'или', $._expression)),
-    ),
+    var_statement: ($) =>
+      seq(
+        optional("экспорт"),
+        "пер",
+        $.identifier,
+        optional($.type_annotation),
+        optional(seq("=", $._expression)),
+        ";",
+      ),
 
-    call_expression: $ => prec(PREC.call, seq($._expression, $.arguments)),
+    return_statement: ($) => seq("возврат", optional($._expression), ";"),
 
-    field_expression: $ => prec(PREC.field, seq(
-      $._expression,
-      ".",
-      $.identifier
-    )),
+    function_declaration: ($) =>
+      seq(
+        optional("экспорт"),
+        "функ",
+        $.identifier,
+        $.params_list,
+        optional($.type_annotation),
+        repeat($._statement),
+        "конец",
+      ),
 
-    this_expression: $ => "это",
+    params_list: ($) => seq("(", sepBy(",", $.parameter), ")"),
 
-    super_expression: $ => seq(
-      "родитель",
-      ".",
-      $.identifier
-    ),
+    parameter: ($) => seq($.identifier, optional($.type_annotation)),
 
-    arguments: $ => seq(
-      '(',
-      sepBy(',', seq($._expression)),
-      optional(','),
-      ')',
-    ),
+    assignment_statement: ($) =>
+      seq(
+        choice($.identifier, $.field_expression, $.index_expression),
+        "=",
+        $._expression,
+        ";",
+      ),
 
-    closure_expression: $ => prec(PREC.closure, seq(
-      "функ",
-      $.params_list,
-      repeat($._statement),
-      "конец"
-    )),
+    if_statement: ($) =>
+      seq(
+        "если",
+        $._expression,
+        repeat($._statement),
+        optional(seq("иначе", repeat($._statement))),
+        "конец",
+      ),
 
-    identifier: $ => /[\p{XID_Start}_][\p{XID_Continue}_]*/,
+    while_statement: ($) => seq("пока", $._expression, repeat($._statement), "конец"),
 
-    type: $ => seq(
-      ":",
-      $.identifier
-    ),
+    try_statement: ($) =>
+      seq(
+        "попытка",
+        repeat($._statement),
+        "перехват",
+        optional($.identifier),
+        repeat($._statement),
+        "конец",
+      ),
 
-    _literal: $ => choice(
-      $.number,
-      $.bool,
-      $.string,
-    ),
+    throw_statement: ($) => seq("исключение", $._expression, ";"),
 
-    number: $ => /[0-9]+(\.[0-9]+)?/,
+    class_declaration: ($) =>
+      seq(
+        optional("экспорт"),
+        "класс",
+        $.identifier,
+        optional(seq("наследует", $.identifier)),
+        optional(seq("реализует", sepBy1(",", $.identifier))),
+        repeat($.class_member),
+        "конец",
+      ),
 
-    bool: $ => choice(
-      "истина",
-      "ложь"
-    ),
+    class_member: ($) =>
+      choice($.constructor_declaration, $.function_declaration, $.field_declaration),
 
-    string: $ => seq(
-      '"',
-      repeat(choice(
-        /[^"\\\n]/,        // любой символ кроме кавычки, бэкслэша и перевода строки
-        /\\./              // escape-последовательности
-      )),
-      '"'
-    )
+    field_declaration: ($) => seq($.identifier, optional($.type_annotation), optional(";")),
 
-  }
+    constructor_declaration: ($) =>
+      seq("конструктор", $.params_list, repeat($._statement), "конец"),
+
+    interface_declaration: ($) =>
+      seq(
+        optional("экспорт"),
+        "интерфейс",
+        $.identifier,
+        repeat($.method_signature),
+        "конец",
+      ),
+
+    method_signature: ($) => seq("функ", $.identifier, $.params_list, ";"),
+
+    annotation_declaration: ($) =>
+      seq(optional("экспорт"), "аннотация", $.identifier, repeat($._statement), "конец"),
+
+    expression_statement: ($) => seq($._expression, ";"),
+
+    _expression: ($) =>
+      choice(
+        $.lambda_expression,
+        $.binary_expression,
+        $.unary_expression,
+        $.call_expression,
+        $.field_expression,
+        $.index_expression,
+        $.primary_expression,
+      ),
+
+    unary_expression: ($) =>
+      prec(
+        PREC.unary,
+        seq(choice("-", "!"), $._expression),
+      ),
+
+    binary_expression: ($) =>
+      choice(
+        prec.left(PREC.or, seq($._expression, "или", $._expression)),
+        prec.left(PREC.and, seq($._expression, "и", $._expression)),
+        prec.left(PREC.equality, seq($._expression, choice("==", "!="), $._expression)),
+        prec.left(
+          PREC.comparison,
+          seq($._expression, choice("<", "<=", ">", ">="), $._expression),
+        ),
+        prec.left(PREC.additive, seq($._expression, choice("+", "-"), $._expression)),
+        prec.left(PREC.multiplicative, seq($._expression, choice("*", "/", "%"), $._expression)),
+      ),
+
+    call_expression: ($) => prec.left(PREC.call, seq($._expression, $.arguments)),
+
+    field_expression: ($) => prec.left(PREC.field, seq($._expression, ".", $.identifier)),
+
+    index_expression: ($) =>
+      prec.left(
+        PREC.index,
+        seq($._expression, "[", choice($.slice, $._expression), "]"),
+      ),
+
+    slice: ($) => seq(optional($._expression), ":", optional($._expression)),
+
+    lambda_expression: ($) =>
+      prec(
+        PREC.closure,
+        seq(
+          "функ",
+          $.params_list,
+          optional($.type_annotation),
+          repeat($._statement),
+          "конец",
+        ),
+      ),
+
+    primary_expression: ($) =>
+      choice(
+        $.array_literal,
+        $.dict_literal,
+        $.number,
+        $.bool,
+        $.string,
+        $.this_expression,
+        $.super_expression,
+        $.identifier,
+        $.parenthesized_expression,
+      ),
+
+    parenthesized_expression: ($) => seq("(", $._expression, ")"),
+
+    array_literal: ($) => seq("[", sepBy(",", $._expression), "]"),
+
+    dict_literal: ($) => seq("{", sepBy(",", $.dict_pair), "}"),
+
+    dict_pair: ($) => seq($._expression, ":", $._expression),
+
+    this_expression: ($) => "это",
+
+    super_expression: ($) => seq("родитель", ".", $.identifier),
+
+    arguments: ($) => seq("(", sepBy(",", $._expression), ")"),
+
+    identifier: ($) => /[\p{XID_Start}_][\p{XID_Continue}_]*/,
+
+    type_annotation: ($) => seq(":", $.identifier),
+
+    number: ($) => /[0-9]+(\.[0-9]+)?/,
+
+    bool: ($) => choice("истина", "ложь"),
+
+    string: ($) =>
+      seq(
+        '"',
+        repeat(choice(/[^"\\\n]/, /\\./)),
+        '"',
+      ),
+  },
 });
 
 /**
@@ -317,7 +267,6 @@ module.exports = grammar({
 function sepBy1(sep, rule) {
   return seq(rule, repeat(seq(sep, rule)));
 }
-
 
 /**
  * Creates a rule to optionally match one or more of the rules separated by the separator.
